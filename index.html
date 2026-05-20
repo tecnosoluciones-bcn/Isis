@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Para mi Isis · Con todo mi amor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rose-50:#fff5f7;
+    --rose-100:#ffe9ef;
+    --rose-200:#ffd3de;
+    --rose-300:#f7b8c8;
+    --rose-400:#ec90a8;
+    --rose-500:#d96f8b;
+    --rose-600:#b85574;
+    --rose-700:#8d3c57;
+    --cream:#fffdfb;
+    --gold:#c9a96a;
+    --ink:#3a2530;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Cormorant Garamond', serif;
+    background:var(--cream);
+    color:var(--ink);
+    overflow-x:hidden;
+    line-height:1.6;
+  }
+
+  /* ===== Floating petals background ===== */
+  .petals{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+  .petal{position:absolute;top:-40px;opacity:.7;animation:fall linear infinite;}
+  @keyframes fall{
+    0%{transform:translateY(-10vh) rotate(0deg);opacity:0;}
+    10%{opacity:.8;}
+    100%{transform:translateY(110vh) rotate(360deg);opacity:0;}
+  }
+
+  /* ===== Hero ===== */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:
+      radial-gradient(ellipse at top, var(--rose-100) 0%, transparent 60%),
+      radial-gradient(ellipse at bottom, var(--rose-50) 0%, var(--cream) 70%);
+    text-align:center;
+    padding:80px 24px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:24px;
+    border:1px solid var(--rose-200);
+    border-radius:4px;
+    pointer-events:none;
+  }
+  .hero-tulips{
+    position:absolute;
+    bottom:0;left:50%;transform:translateX(-50%);
+    width:min(900px,95vw);
+    opacity:.9;
+    pointer-events:none;
+  }
+  .hero-tulip-left,.hero-tulip-right{
+    position:absolute;top:20%;
+    width:140px;opacity:.55;
+  }
+  .hero-tulip-left{left:4%;transform:rotate(-12deg);}
+  .hero-tulip-right{right:4%;transform:rotate(12deg);}
+
+  .ornament{
+    display:flex;align-items:center;justify-content:center;gap:18px;
+    margin-bottom:30px;color:var(--rose-500);
+    font-family:'Dancing Script',cursive;font-size:1.4rem;
+    opacity:0;animation:fadeUp 1.2s .2s forwards;
+  }
+  .ornament .line{flex:0 0 80px;height:1px;background:linear-gradient(90deg,transparent,var(--rose-400),transparent);}
+  .ornament svg{width:22px;height:22px;}
+
+  .hero h1{
+    font-family:'Playfair Display',serif;
+    font-weight:400;
+    font-style:italic;
+    font-size:clamp(3rem, 9vw, 7rem);
+    color:var(--rose-700);
+    letter-spacing:-0.02em;
+    line-height:1;
+    margin-bottom:18px;
+    opacity:0;animation:fadeUp 1.4s .4s forwards;
+  }
+  .hero h1 .amp{
+    font-family:'Dancing Script',cursive;
+    font-style:normal;
+    color:var(--rose-500);
+    font-size:.85em;
+  }
+  .hero .sub{
+    font-size:clamp(1.1rem,2.2vw,1.5rem);
+    font-style:italic;
+    color:var(--rose-600);
+    max-width:560px;margin:0 auto;
+    font-weight:300;letter-spacing:.02em;
+    opacity:0;animation:fadeUp 1.4s .7s forwards;
+  }
+  .hero .from{
+    margin-top:48px;
+    font-family:'Dancing Script',cursive;
+    font-size:1.6rem;
+    color:var(--rose-500);
+    opacity:0;animation:fadeUp 1.4s 1s forwards;
+  }
+  .scroll-cue{
+    position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
+    color:var(--rose-500);font-size:.85rem;letter-spacing:.3em;text-transform:uppercase;
+    opacity:0;animation:fadeUp 1.4s 1.4s forwards, bob 2.6s 2.6s ease-in-out infinite;
+  }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+
+  /* ===== Section base ===== */
+  section{position:relative;z-index:1;}
+  .section{padding:120px 24px;max-width:1200px;margin:0 auto;}
+  .section-title{
+    text-align:center;
+    margin-bottom:60px;
+  }
+  .section-title .eyebrow{
+    font-family:'Dancing Script',cursive;
+    font-size:1.6rem;color:var(--rose-500);
+    margin-bottom:8px;display:block;
+  }
+  .section-title h2{
+    font-family:'Playfair Display',serif;
+    font-weight:400;font-style:italic;
+    font-size:clamp(2.2rem,5vw,3.6rem);
+    color:var(--rose-700);
+    letter-spacing:-0.01em;
+  }
+  .section-title .deco{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin-top:18px;
+  }
+  .section-title .deco .line{width:60px;height:1px;background:var(--rose-300);}
+  .section-title .deco svg{width:18px;height:18px;color:var(--rose-400);}
+
+  /* ===== Message / Letter ===== */
+  .letter-wrap{
+    background:linear-gradient(180deg, var(--rose-50) 0%, var(--cream) 100%);
+    padding:140px 24px;
+    position:relative;
+    overflow:hidden;
+  }
+  .letter-wrap::before,.letter-wrap::after{
+    content:"";position:absolute;width:280px;height:280px;
+    background:radial-gradient(circle, var(--rose-200) 0%, transparent 70%);
+    border-radius:50%;opacity:.5;
+  }
+  .letter-wrap::before{top:-80px;left:-80px;}
+  .letter-wrap::after{bottom:-80px;right:-80px;}
+
+  .letter{
+    max-width:760px;margin:0 auto;
+    background:#fff;
+    padding:80px clamp(28px,6vw,80px);
+    border-radius:2px;
+    box-shadow:
+      0 1px 0 var(--rose-100),
+      0 30px 80px -30px rgba(216,111,139,.25),
+      0 10px 30px -15px rgba(216,111,139,.15);
+    position:relative;
+    border:1px solid var(--rose-100);
+  }
+  .letter::before{
+    content:"";position:absolute;inset:14px;border:1px solid var(--rose-100);pointer-events:none;border-radius:1px;
+  }
+  .letter .corner{
+    position:absolute;width:50px;height:50px;color:var(--rose-300);
+  }
+  .letter .corner.tl{top:18px;left:18px;}
+  .letter .corner.tr{top:18px;right:18px;transform:scaleX(-1);}
+  .letter .corner.bl{bottom:18px;left:18px;transform:scaleY(-1);}
+  .letter .corner.br{bottom:18px;right:18px;transform:scale(-1,-1);}
+
+  .letter h3{
+    font-family:'Playfair Display',serif;
+    font-style:italic;font-weight:400;
+    font-size:clamp(1.8rem,3.5vw,2.6rem);
+    color:var(--rose-700);
+    text-align:center;
+    margin-bottom:8px;
+  }
+  .letter .sub-title{
+    text-align:center;
+    font-family:'Dancing Script',cursive;
+    color:var(--rose-500);
+    font-size:1.5rem;
+    margin-bottom:40px;
+  }
+  .letter p{
+    font-size:1.18rem;
+    line-height:1.85;
+    color:var(--ink);
+    margin-bottom:1.4em;
+    font-weight:400;
+  }
+  .letter p:first-of-type::first-letter{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-size:3.6em;
+    float:left;
+    line-height:.85;
+    padding:6px 12px 0 0;
+    color:var(--rose-500);
+  }
+  .letter .signoff{
+    text-align:center;
+    margin-top:40px;
+    font-family:'Dancing Script',cursive;
+    font-size:2rem;
+    color:var(--rose-600);
+  }
+  .letter .heart-divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:30px 0;
+  }
+  .letter .heart-divider .line{flex:0 0 60px;height:1px;background:var(--rose-200);}
+  .letter .heart-divider svg{width:16px;height:16px;color:var(--rose-400);}
+
+  /* ===== Gallery: childhood ===== */
+  .childhood{
+    background:var(--cream);
+  }
+  .childhood-grid{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    gap:18px;
+  }
+  .photo{
+    overflow:hidden;
+    border-radius:3px;
+    position:relative;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.8) inset,
+      0 14px 40px -18px rgba(216,111,139,.45),
+      0 6px 18px -10px rgba(216,111,139,.25);
+    background:linear-gradient(135deg, #fff 0%, var(--rose-50) 100%);
+    padding:14px 14px 50px 14px;
+    transition:transform .6s cubic-bezier(.2,.8,.2,1), box-shadow .6s;
+  }
+  .photo::after{
+    content:"";position:absolute;inset:8px;border:1px solid rgba(216,111,139,.15);pointer-events:none;
+    border-radius:2px;
+    opacity:0;transition:opacity .4s;
+  }
+  .photo:hover{transform:translateY(-8px);box-shadow:
+      0 1px 0 rgba(255,255,255,.8) inset,
+      0 30px 60px -20px rgba(216,111,139,.55),
+      0 12px 30px -12px rgba(216,111,139,.3);}
+  .photo:hover::after{opacity:1;}
+  .photo img{
+    width:100%;height:100%;
+    object-fit:contain;
+    display:block;
+    transition:transform 1.2s cubic-bezier(.2,.8,.2,1);
+    border-radius:1px;
+  }
+  .photo:hover img{transform:scale(1.02);}
+
+  /* Childhood grid - 2 columns, generous size */
+  .childhood-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:36px;
+    max-width:980px;
+    margin:0 auto;
+  }
+  .childhood-grid .photo{grid-column:span 1;aspect-ratio:3/4;margin-top:0;}
+  .childhood-grid .photo:nth-child(even){margin-top:48px;}
+
+  /* ===== Quote band ===== */
+  .quote-band{
+    background:linear-gradient(135deg, var(--rose-200) 0%, var(--rose-100) 50%, var(--rose-50) 100%);
+    padding:120px 24px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .quote-band .tulip-bg{
+    position:absolute;opacity:.35;
+  }
+  .quote-band .tulip-bg.left{left:-30px;top:50%;transform:translateY(-50%) rotate(-15deg);width:200px;}
+  .quote-band .tulip-bg.right{right:-30px;top:50%;transform:translateY(-50%) rotate(15deg) scaleX(-1);width:200px;}
+  .quote-band blockquote{
+    max-width:780px;margin:0 auto;
+    font-family:'Playfair Display',serif;
+    font-style:italic;font-weight:400;
+    font-size:clamp(1.6rem,3.5vw,2.4rem);
+    color:var(--rose-700);
+    line-height:1.4;
+    position:relative;z-index:1;
+  }
+  .quote-band blockquote::before{
+    content:"“";font-family:'Playfair Display',serif;
+    font-size:6rem;color:var(--rose-400);
+    line-height:1;display:block;margin-bottom:-20px;
+  }
+  .quote-band cite{
+    display:block;margin-top:30px;
+    font-family:'Dancing Script',cursive;
+    font-size:1.5rem;color:var(--rose-500);font-style:normal;
+  }
+
+  /* ===== Sister section ===== */
+  .sister-grid{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    gap:18px;
+  }
+  .sister-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:36px;
+    max-width:980px;
+    margin:0 auto;
+  }
+  .sister-grid .photo{grid-column:span 1;aspect-ratio:3/4;margin-top:0;}
+  .sister-grid .photo:nth-child(even){margin-top:48px;}
+  .sister-grid .photo:nth-child(5){grid-column:span 2;aspect-ratio:16/10;margin-top:0;}
+
+  /* ===== Today section ===== */
+  .today{
+    background:linear-gradient(180deg, var(--cream) 0%, var(--rose-50) 100%);
+  }
+  .today-grid{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    gap:18px;
+  }
+  .today-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:36px;
+    max-width:980px;
+    margin:0 auto;
+  }
+  .today-grid .photo{grid-column:span 1;aspect-ratio:3/4;margin-top:0;}
+  .today-grid .photo:nth-child(even){margin-top:48px;}
+
+  /* ===== Family section ===== */
+  .family{
+    background:var(--cream);
+  }
+  .family-grid{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    gap:18px;
+  }
+  .family-grid{
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+    max-width:1000px;
+    margin:0 auto;
+  }
+  .family-grid .photo{grid-column:span 1;aspect-ratio:3/4;margin-top:0;}
+  .family-grid .photo:nth-child(2){margin-top:50px;}
+
+  /* ===== Final / Tu y yo ===== */
+  .tuyyo{
+    background:
+      radial-gradient(ellipse at top, var(--rose-100), transparent 60%),
+      linear-gradient(180deg, var(--rose-50), var(--cream));
+    padding:120px 24px;
+    text-align:center;
+  }
+  .tuyyo-inner{
+    max-width:560px;margin:0 auto;
+  }
+  .tuyyo .photo{
+    aspect-ratio:3/4;
+    margin-bottom:50px;
+    border-radius:3px;
+  }
+  .tuyyo h3{
+    font-family:'Playfair Display',serif;
+    font-style:italic;font-weight:400;
+    font-size:clamp(2rem,4vw,3rem);
+    color:var(--rose-700);
+    margin-bottom:18px;
+  }
+  .tuyyo p{
+    font-size:1.2rem;color:var(--rose-600);
+    font-style:italic;line-height:1.7;
+  }
+
+  /* ===== Footer ===== */
+  footer{
+    background:var(--rose-700);
+    color:var(--rose-100);
+    padding:60px 24px;
+    text-align:center;
+    position:relative;
+  }
+  footer .heart{
+    font-size:2rem;color:var(--rose-200);margin-bottom:14px;display:block;
+  }
+  footer p{
+    font-family:'Dancing Script',cursive;
+    font-size:1.4rem;
+    line-height:1.5;
+  }
+  footer .small{
+    margin-top:18px;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:1rem;
+    color:var(--rose-200);
+    opacity:.8;
+  }
+
+  /* ===== Reveal on scroll ===== */
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity 1.1s cubic-bezier(.2,.8,.2,1), transform 1.1s cubic-bezier(.2,.8,.2,1);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  .reveal-delay-1{transition-delay:.1s;}
+  .reveal-delay-2{transition-delay:.2s;}
+  .reveal-delay-3{transition-delay:.3s;}
+  .reveal-delay-4{transition-delay:.4s;}
+
+  /* ===== Responsive ===== */
+  @media (max-width: 800px){
+    .section{padding:80px 18px;}
+    .letter-wrap{padding:80px 18px;}
+    .letter{padding:50px 24px;}
+    .letter p{font-size:1.08rem;}
+    .hero-tulip-left,.hero-tulip-right{display:none;}
+    .childhood-grid,
+    .sister-grid,
+    .today-grid,
+    .family-grid{
+      grid-template-columns:1fr !important;
+      gap:28px !important;
+    }
+    .childhood-grid .photo,
+    .sister-grid .photo,
+    .today-grid .photo,
+    .family-grid .photo{
+      grid-column:span 1 !important;
+      margin-top:0 !important;
+      aspect-ratio:3/4 !important;
+    }
+    .sister-grid .photo:nth-child(5){aspect-ratio:3/4 !important;}
+    .quote-band{padding:80px 18px;}
+    .quote-band .tulip-bg{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating petals -->
+<div class="petals" id="petals"></div>
+
+<!-- SVG defs for tulips -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="tulip" viewBox="0 0 100 200">
+      <!-- Stem -->
+      <path d="M50 200 Q48 140 50 80" stroke="#7aa86b" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <!-- Leaf -->
+      <path d="M50 150 Q20 130 25 100 Q40 115 50 140 Z" fill="#8fbf7c"/>
+      <path d="M50 130 Q80 110 75 80 Q60 95 50 120 Z" fill="#a3cf90"/>
+      <!-- Flower -->
+      <path d="M50 30
+               C 30 30, 22 55, 28 80
+               C 32 90, 40 92, 50 90
+               C 60 92, 68 90, 72 80
+               C 78 55, 70 30, 50 30 Z"
+            fill="#ec90a8"/>
+      <path d="M50 32
+               C 40 35, 36 55, 42 80
+               C 46 88, 54 88, 58 80
+               C 64 55, 60 35, 50 32 Z"
+            fill="#f7b8c8" opacity=".8"/>
+      <path d="M50 30 C 45 50, 45 70, 50 88" stroke="#d96f8b" stroke-width="1" fill="none" opacity=".4"/>
+    </symbol>
+
+    <symbol id="tulip-small" viewBox="0 0 60 80">
+      <path d="M30 80 Q29 50 30 35" stroke="#7aa86b" stroke-width="1.5" fill="none"/>
+      <path d="M30 15
+               C 20 15, 16 30, 19 42
+               C 21 47, 25 48, 30 47
+               C 35 48, 39 47, 41 42
+               C 44 30, 40 15, 30 15 Z"
+            fill="#ec90a8"/>
+      <path d="M30 16 C 25 18, 23 30, 26 42 C 28 46, 32 46, 34 42 C 37 30, 35 18, 30 16 Z" fill="#f7b8c8" opacity=".7"/>
+    </symbol>
+
+    <symbol id="heart" viewBox="0 0 24 24">
+      <path d="M12 21s-7-4.5-9.5-9.5C.5 7 4 3 8 5c2 1 3 2.5 4 4 1-1.5 2-3 4-4 4-2 7.5 2 5.5 6.5C19 16.5 12 21 12 21z" fill="currentColor"/>
+    </symbol>
+
+    <symbol id="sprig" viewBox="0 0 60 20">
+      <path d="M5 10 Q30 2 55 10" stroke="currentColor" stroke-width="1" fill="none"/>
+      <circle cx="15" cy="8" r="1.5" fill="currentColor"/>
+      <circle cx="30" cy="5" r="2" fill="currentColor"/>
+      <circle cx="45" cy="8" r="1.5" fill="currentColor"/>
+    </symbol>
+
+    <symbol id="corner-ornament" viewBox="0 0 50 50">
+      <path d="M5 5 L 5 25 M5 5 L 25 5" stroke="currentColor" stroke-width="1" fill="none"/>
+      <path d="M5 5 Q 20 8 25 20 Q 22 22 18 20 Q 15 14 5 12" stroke="currentColor" stroke-width=".8" fill="none"/>
+      <circle cx="5" cy="5" r="2" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============= HERO ============= -->
+<section class="hero">
+  <svg class="hero-tulip-left" viewBox="0 0 100 200"><use href="#tulip"/></svg>
+  <svg class="hero-tulip-right" viewBox="0 0 100 200"><use href="#tulip"/></svg>
+
+  <div class="ornament">
+    <span class="line"></span>
+    <svg><use href="#sprig"/></svg>
+    <span>Para mi Isis</span>
+    <svg><use href="#sprig"/></svg>
+    <span class="line"></span>
+  </div>
+
+  <h1>Isis<span class="amp">,</span><br/>mi hija amada</h1>
+  <p class="sub">Eres la niña que siempre soñé tener,<br/>la dueña de mi corazón y de mi felicidad.</p>
+  <div class="from">— Con todo mi amor, tu mamá ❤️</div>
+
+  <div class="scroll-cue">desliza · con amor</div>
+</section>
+
+<!-- ============= LETTER ============= -->
+<section class="letter-wrap">
+  <div class="letter reveal">
+    <svg class="corner tl"><use href="#corner-ornament"/></svg>
+    <svg class="corner tr"><use href="#corner-ornament"/></svg>
+    <svg class="corner bl"><use href="#corner-ornament"/></svg>
+    <svg class="corner br"><use href="#corner-ornament"/></svg>
+
+    <h3>Para mi Isis</h3>
+    <div class="sub-title">mi hija amada</div>
+
+    <p>Isis, eres la niña que siempre soñé tener. La dueña de mi corazón y de mi felicidad. Mi primogénita, mi princesita por siempre. 😍</p>
+
+    <p>Has estado a mi lado cada día de mi vida, siendo mi cómplice, mi compañera y mi esponjita. Siempre leal, noble e incondicional.</p>
+
+    <p>Has sido un apoyo en cada etapa que hemos vivido juntas. Contigo he crecido, he aprendido y he descubierto una forma de amor que no tiene medida. Sé que este amor es para toda la vida, y me siento profundamente afortunada de tenerte como hija.</p>
+
+    <div class="heart-divider">
+      <span class="line"></span>
+      <svg><use href="#heart"/></svg>
+      <span class="line"></span>
+    </div>
+
+    <p>Como amiga, eres incondicional. Eres de esas personas que ponen sus valores por delante, que hablan desde el corazón y que saben apoyar incluso en silencio. Eres quien sabe estar, quien no abandona, quien escucha y quien le pone el alma a cada circunstancia que decide acompañar.</p>
+
+    <p>Como hermana, eres protectora, responsable, madura, cómplice y ejemplo. Eres capaz de ponerte por encima de todo con tal de ver feliz a tu hermano. Y sé que te sientes orgullosa de tener un hermano que, al igual que tú, ha crecido con valores hermosos y con un corazón noble.</p>
+
+    <div class="heart-divider">
+      <span class="line"></span>
+      <svg><use href="#heart"/></svg>
+      <span class="line"></span>
+    </div>
+
+    <p>Isis, eres luz, amor, fuerza y ternura. Eres una hija maravillosa, una amiga verdadera y una hermana excepcional.</p>
+
+    <p>Gracias por existir, por ser como eres y por llenar mi vida de tanto amor. Te amo con todo mi corazón, hoy y siempre. ❤️</p>
+
+    <div class="signoff">Te amo, mi vida.</div>
+  </div>
+</section>
+
+<!-- ============= CHILDHOOD ============= -->
+<section class="section childhood">
+  <div class="section-title reveal">
+    <span class="eyebrow">capítulo uno</span>
+    <h2>mi princesita</h2>
+    <div class="deco"><span class="line"></span><svg><use href="#tulip-small"/></svg><span class="line"></span></div>
+  </div>
+
+  <div class="childhood-grid">
+    <div class="photo reveal"><img src="isis1.png" alt="Isis de pequeña"/></div>
+    <div class="photo reveal reveal-delay-1"><img src="isis2.png" alt="Isis de pequeña"/></div>
+    <div class="photo reveal reveal-delay-2"><img src="isis3.png" alt="Isis de pequeña"/></div>
+    <div class="photo reveal reveal-delay-1"><img src="isis4.png" alt="Isis"/></div>
+    <div class="photo reveal reveal-delay-2"><img src="isis5.png" alt="Isis"/></div>
+    <div class="photo reveal reveal-delay-3"><img src="isis6.png" alt="Isis"/></div>
+    <div class="photo reveal reveal-delay-1"><img src="isis7.png" alt="Isis"/></div>
+    <div class="photo reveal reveal-delay-2"><img src="isis8.png" alt="Isis"/></div>
+  </div>
+</section>
+
+<!-- ============= QUOTE BAND ============= -->
+<section class="quote-band">
+  <svg class="tulip-bg left"><use href="#tulip"/></svg>
+  <svg class="tulip-bg right"><use href="#tulip"/></svg>
+  <blockquote class="reveal">
+    Contigo he crecido, he aprendido y he descubierto una forma de amor que no tiene medida.
+    <cite>— mamá</cite>
+  </blockquote>
+</section>
+
+<!-- ============= SISTER ============= -->
+<section class="section">
+  <div class="section-title reveal">
+    <span class="eyebrow">capítulo dos</span>
+    <h2>hermana excepcional</h2>
+    <div class="deco"><span class="line"></span><svg><use href="#tulip-small"/></svg><span class="line"></span></div>
+  </div>
+
+  <div class="sister-grid">
+    <div class="photo reveal"><img src="isisyizan1.png" alt="Isis con su hermano"/></div>
+    <div class="photo reveal reveal-delay-1"><img src="isisyizan2.png" alt="Isis con su hermano"/></div>
+    <div class="photo reveal reveal-delay-2"><img src="isisyizan3.png" alt="Isis con su hermano"/></div>
+    <div class="photo reveal reveal-delay-1"><img src="isisyizan4.png" alt="Isis con su hermano"/></div>
+    <div class="photo reveal reveal-delay-2"><img src="isisyizan5.png" alt="Isis con su hermano"/></div>
+  </div>
+</section>
+
+<!-- ============= QUOTE BAND 2 ============= -->
+<section class="quote-band">
+  <svg class="tulip-bg left"><use href="#tulip"/></svg>
+  <svg class="tulip-bg right"><use href="#tulip"/></svg>
+  <blockquote class="reveal">
+    Eres luz, amor, fuerza y ternura.<br/>Una hija maravillosa, una amiga verdadera, una hermana excepcional.
+    <cite>— mamá</cite>
+  </blockquote>
+</section>
+
+<!-- ============= TODAY ============= -->
+<section class="section today">
+  <div class="section-title reveal">
+    <span class="eyebrow">capítulo tres</span>
+    <h2>la mujer que eres hoy</h2>
+    <div class="deco"><span class="line"></span><svg><use href="#tulip-small"/></svg><span class="line"></span></div>
+  </div>
+
+  <div class="today-grid">
+    <div class="photo reveal"><img src="familia1.png" alt="Isis"/></div>
+    <div class="photo reveal reveal-delay-1"><img src="familia2.png" alt="Isis"/></div>
+    <div class="photo reveal reveal-delay-2"><img src="familia3.png" alt="Isis"/></div>
+    <div class="photo reveal reveal-delay-3"><img src="isisyizan5.png" alt="Isis"/></div>
+  </div>
+</section>
+
+<!-- ============= TU Y YO ============= -->
+<section class="tuyyo">
+  <div class="tuyyo-inner reveal">
+    <h3>tú y yo, por siempre</h3>
+    <p style="margin-bottom:40px;">Gracias por existir,<br/>por ser como eres,<br/>y por llenar mi vida de tanto amor.</p>
+    <div class="photo"><img src="tuyyo.png" alt="Tú y yo"/></div>
+    <p style="margin-top:40px;">Te amo con todo mi corazón,<br/>hoy y siempre. ❤️</p>
+  </div>
+</section>
+
+<!-- ============= FOOTER ============= -->
+<footer>
+  <span class="heart">❤️</span>
+  <p>Hecho con todo el amor del mundo,<br/>para mi Isis.</p>
+  <div class="small">— mamá</div>
+</footer>
+
+<script>
+  // Floating petals
+  (function(){
+    const container = document.getElementById('petals');
+    const petalSVG = `<svg viewBox="0 0 40 40" width="22" height="22">
+      <path d="M20 6 C 12 8, 8 18, 12 28 C 14 32, 18 32, 20 28 C 22 32, 26 32, 28 28 C 32 18, 28 8, 20 6 Z" fill="#f7b8c8" opacity="0.8"/>
+    </svg>`;
+    const count = 14;
+    for(let i=0;i<count;i++){
+      const p = document.createElement('div');
+      p.className = 'petal';
+      p.innerHTML = petalSVG;
+      p.style.left = Math.random()*100 + '%';
+      const dur = 12 + Math.random()*18;
+      const delay = Math.random()*-20;
+      p.style.animationDuration = dur + 's';
+      p.style.animationDelay = delay + 's';
+      p.style.transform = `scale(${0.6 + Math.random()*0.9})`;
+      p.style.opacity = (0.4 + Math.random()*0.4);
+      container.appendChild(p);
+    }
+  })();
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:0.12, rootMargin:'0px 0px -50px 0px'});
+
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
