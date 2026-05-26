@@ -30,6 +30,12 @@
     overflow-x:hidden;
     line-height:1.6;
   }
+  /* Lock scroll while welcome overlay is active */
+  body.locked{
+    overflow:hidden;
+    height:100vh;
+    touch-action:none;
+  }
 
   /* ===== Floating petals background ===== */
   .petals{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
@@ -534,9 +540,191 @@
     .quote-band{padding:80px 18px;}
     .quote-band .tulip-bg{display:none;}
   }
+
+  /* ===== Welcome Overlay ===== */
+  .welcome-overlay{
+    position:fixed;inset:0;z-index:9999;
+    background:
+      radial-gradient(ellipse at center, var(--rose-100) 0%, var(--rose-200) 60%, var(--rose-300) 100%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:24px;
+    transition:opacity 1.2s ease, visibility 1.2s ease;
+  }
+  .welcome-overlay::before{
+    content:"";
+    position:absolute;inset:24px;
+    border:1px solid rgba(255,255,255,.4);
+    border-radius:6px;
+    pointer-events:none;
+  }
+  .welcome-overlay.hidden{
+    opacity:0;visibility:hidden;pointer-events:none;
+  }
+  .welcome-overlay .welcome-inner{
+    position:relative;z-index:1;
+    animation:welcomeFloat 4s ease-in-out infinite;
+  }
+  @keyframes welcomeFloat{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+  }
+  .welcome-overlay .tulip-decoration{
+    width:80px;height:160px;margin:0 auto 20px;opacity:.9;
+  }
+  .welcome-overlay h2{
+    font-family:'Dancing Script',cursive;
+    font-size:clamp(1.4rem,3vw,1.8rem);
+    color:var(--rose-600);
+    margin-bottom:10px;
+    font-weight:600;
+  }
+  .welcome-overlay h1{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(2.5rem,7vw,5rem);
+    color:var(--rose-700);
+    line-height:1.1;
+    margin-bottom:30px;
+    letter-spacing:-.01em;
+  }
+  .welcome-overlay .welcome-deco{
+    display:flex;align-items:center;justify-content:center;gap:14px;
+    margin-bottom:40px;
+  }
+  .welcome-overlay .welcome-deco .line{
+    width:60px;height:1px;
+    background:linear-gradient(90deg,transparent,var(--rose-500),transparent);
+  }
+  .welcome-overlay .welcome-deco svg{width:18px;height:18px;color:var(--rose-500);}
+  .welcome-overlay .enter-btn{
+    display:inline-flex;align-items:center;gap:12px;
+    padding:18px 42px;
+    background:#fff;
+    color:var(--rose-700);
+    border:1px solid var(--rose-300);
+    border-radius:50px;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:1.2rem;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:all .4s cubic-bezier(.2,.8,.2,1);
+    box-shadow:0 10px 30px -10px rgba(216,111,139,.4);
+  }
+  .welcome-overlay .enter-btn:hover{
+    background:var(--rose-500);
+    color:#fff;
+    transform:translateY(-3px);
+    box-shadow:0 18px 40px -10px rgba(216,111,139,.6);
+  }
+  .welcome-overlay .enter-btn svg{width:18px;height:18px;}
+  .welcome-overlay .music-note{
+    margin-top:30px;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:.95rem;
+    color:var(--rose-600);
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    opacity:.85;
+  }
+  .welcome-overlay .music-note svg{width:16px;height:16px;}
+
+  /* ===== Music Toggle Button (floating) ===== */
+  .music-toggle{
+    position:fixed;
+    bottom:24px;right:24px;
+    width:56px;height:56px;
+    border-radius:50%;
+    background:#fff;
+    border:1px solid var(--rose-200);
+    box-shadow:0 8px 24px -6px rgba(216,111,139,.4);
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    z-index:1000;
+    color:var(--rose-500);
+    transition:all .3s ease;
+    opacity:0;
+    transform:scale(0);
+  }
+  .music-toggle.visible{
+    opacity:1;
+    transform:scale(1);
+  }
+  .music-toggle:hover{
+    background:var(--rose-500);
+    color:#fff;
+    transform:scale(1.08);
+    box-shadow:0 12px 28px -6px rgba(216,111,139,.55);
+  }
+  .music-toggle svg{width:22px;height:22px;}
+  .music-toggle .pause-icon{display:none;}
+  .music-toggle.playing .play-icon{display:none;}
+  .music-toggle.playing .pause-icon{display:block;}
+
+  /* Music pulse animation when playing */
+  .music-toggle.playing::before{
+    content:"";
+    position:absolute;inset:-4px;
+    border-radius:50%;
+    border:2px solid var(--rose-300);
+    animation:musicPulse 2s ease-out infinite;
+  }
+  @keyframes musicPulse{
+    0%{transform:scale(1);opacity:1;}
+    100%{transform:scale(1.4);opacity:0;}
+  }
+
+  @media (max-width: 800px){
+    .music-toggle{bottom:18px;right:18px;width:48px;height:48px;}
+    .music-toggle svg{width:18px;height:18px;}
+    .welcome-overlay .tulip-decoration{width:60px;height:120px;}
+  }
 </style>
 </head>
 <body>
+
+<!-- Welcome Overlay -->
+<div class="welcome-overlay" id="welcomeOverlay">
+  <div class="welcome-inner">
+    <svg class="tulip-decoration" viewBox="0 0 100 200"><use href="#tulip"/></svg>
+    <h2>Para mi Isis</h2>
+    <h1>con todo<br/>mi amor</h1>
+    <div class="welcome-deco">
+      <span class="line"></span>
+      <svg><use href="#heart"/></svg>
+      <span class="line"></span>
+    </div>
+    <button class="enter-btn" id="enterBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Entrar
+    </button>
+    <div class="music-note">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M9 17V5l12-2v12M9 17a3 3 0 11-3-3 3 3 0 013 3zm12-2a3 3 0 11-3-3 3 3 0 013 3z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      con música
+    </div>
+  </div>
+</div>
+
+<!-- Music Toggle Button -->
+<button class="music-toggle" id="musicToggle" aria-label="Reproducir o pausar música">
+  <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M8 5v14l11-7z"/>
+  </svg>
+  <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M6 4h4v16H6zM14 4h4v16h-4z"/>
+  </svg>
+</button>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="Anson%20Seabra%20-%20Mother.mp3" type="audio/mpeg">
+</audio>
 
 <!-- Floating petals -->
 <div class="petals" id="petals"></div>
@@ -844,6 +1032,71 @@
   },{threshold:0.12, rootMargin:'0px 0px -50px 0px'});
 
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // ===== Welcome overlay + background music =====
+  (function(){
+    const overlay = document.getElementById('welcomeOverlay');
+    const enterBtn = document.getElementById('enterBtn');
+    const music = document.getElementById('bgMusic');
+    const toggle = document.getElementById('musicToggle');
+
+    // Lock scroll immediately while overlay is visible
+    document.body.classList.add('locked');
+    // Make sure we start at the top
+    window.scrollTo(0, 0);
+
+    // Set comfortable volume
+    music.volume = 0.5;
+
+    function enterSite(){
+      // Unlock scroll
+      document.body.classList.remove('locked');
+      // Hide overlay
+      overlay.classList.add('hidden');
+      // Start music
+      const playPromise = music.play();
+      if(playPromise !== undefined){
+        playPromise.then(() => {
+          toggle.classList.add('playing','visible');
+        }).catch(err => {
+          // Autoplay was blocked anyway — show toggle so user can start manually
+          toggle.classList.add('visible');
+          console.log('Autoplay bloqueado, usa el botón para iniciar:', err);
+        });
+      }
+      // Remove overlay from DOM after transition
+      setTimeout(()=>{ overlay.style.display='none'; }, 1300);
+    }
+
+    // ONLY the Enter button closes the overlay
+    enterBtn.addEventListener('click', enterSite);
+
+    // Block all scroll attempts on the overlay (wheel, touch, keys)
+    overlay.addEventListener('wheel', (e)=>e.preventDefault(), {passive:false});
+    overlay.addEventListener('touchmove', (e)=>e.preventDefault(), {passive:false});
+    document.addEventListener('keydown', (e)=>{
+      if(!document.body.classList.contains('locked')) return;
+      // Block arrow keys, space, page up/down, home/end
+      const blockedKeys = [' ','ArrowUp','ArrowDown','PageUp','PageDown','Home','End'];
+      if(blockedKeys.includes(e.key)){
+        e.preventDefault();
+      }
+    });
+
+    // Toggle play/pause
+    toggle.addEventListener('click', ()=>{
+      if(music.paused){
+        music.play().then(()=>toggle.classList.add('playing'));
+      } else {
+        music.pause();
+        toggle.classList.remove('playing');
+      }
+    });
+
+    // Sync icon state with audio events
+    music.addEventListener('play', ()=>toggle.classList.add('playing'));
+    music.addEventListener('pause', ()=>toggle.classList.remove('playing'));
+  })();
 </script>
 
 </body>
